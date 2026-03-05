@@ -1,0 +1,24 @@
+# Principal View Component Library
+version: "1.0.0"
+name: "Cloudflare Agents SDK"
+description: "Component library for Cloudflare Agents SDK observability"
+
+# Service resource registry
+# Define all services in this repository with their OTEL resource attributes
+resources:
+  agents:
+    service.name: "agents"
+    service.version: "0.7.5"
+    owned-scopes:
+      - "agents.rpc"
+      - "agents.state"
+      - "agents.schedule"
+      - "agents.lifecycle"
+      - "agents.workflow"
+      - "agents.mcp"
+      - "agents.email"
+      - "agents.workspace"
+
+nodeComponents: {}
+
+edgeComponents: {}

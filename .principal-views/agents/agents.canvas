@@ -1,0 +1,439 @@
+{
+  "nodes": [
+    {
+      "id": "agent-class",
+      "type": "text",
+      "x": 400,
+      "y": 0,
+      "width": 220,
+      "height": 100,
+      "text": "Agent\n(Durable Object base class)",
+      "color": "#3b82f6",
+      "pv": {
+        "nodeType": "service",
+        "shape": "rectangle",
+        "icon": "Server",
+        "references": ["packages/agents/src/index.ts"]
+      }
+    },
+    {
+      "id": "state-channel",
+      "type": "text",
+      "x": 0,
+      "y": 200,
+      "width": 180,
+      "height": 80,
+      "text": "agents:state\n(State sync)",
+      "color": "#22c55e",
+      "pv": {
+        "nodeType": "channel",
+        "shape": "rectangle",
+        "icon": "Database",
+        "references": ["packages/agents/src/observability/agent.ts"]
+      }
+    },
+    {
+      "id": "rpc-channel",
+      "type": "text",
+      "x": 200,
+      "y": 200,
+      "width": 180,
+      "height": 80,
+      "text": "agents:rpc\n(@callable methods)",
+      "color": "#06b6d4",
+      "pv": {
+        "nodeType": "channel",
+        "shape": "rectangle",
+        "icon": "ArrowLeftRight",
+        "references": ["packages/agents/src/observability/agent.ts"]
+      }
+    },
+    {
+      "id": "message-channel",
+      "type": "text",
+      "x": 400,
+      "y": 200,
+      "width": 180,
+      "height": 80,
+      "text": "agents:message\n(WebSocket msgs, tools)",
+      "color": "#8b5cf6",
+      "pv": {
+        "nodeType": "channel",
+        "shape": "rectangle",
+        "icon": "MessageSquare",
+        "references": ["packages/agents/src/observability/agent.ts"]
+      }
+    },
+    {
+      "id": "schedule-channel",
+      "type": "text",
+      "x": 600,
+      "y": 200,
+      "width": 180,
+      "height": 80,
+      "text": "agents:schedule\n(Cron, alarms, queue)",
+      "color": "#f59e0b",
+      "pv": {
+        "nodeType": "channel",
+        "shape": "rectangle",
+        "icon": "Clock",
+        "references": ["packages/agents/src/schedule.ts"]
+      }
+    },
+    {
+      "id": "lifecycle-channel",
+      "type": "text",
+      "x": 800,
+      "y": 200,
+      "width": 180,
+      "height": 80,
+      "text": "agents:lifecycle\n(connect, disconnect)",
+      "color": "#ef4444",
+      "pv": {
+        "nodeType": "channel",
+        "shape": "rectangle",
+        "icon": "Power",
+        "references": ["packages/agents/src/observability/agent.ts"]
+      }
+    },
+    {
+      "id": "workflow-channel",
+      "type": "text",
+      "x": 100,
+      "y": 350,
+      "width": 180,
+      "height": 80,
+      "text": "agents:workflow\n(Durable workflows)",
+      "color": "#ec4899",
+      "pv": {
+        "nodeType": "channel",
+        "shape": "rectangle",
+        "icon": "GitBranch",
+        "references": ["packages/agents/src/workflows.ts"]
+      }
+    },
+    {
+      "id": "mcp-channel",
+      "type": "text",
+      "x": 300,
+      "y": 350,
+      "width": 180,
+      "height": 80,
+      "text": "agents:mcp\n(MCP server/client)",
+      "color": "#14b8a6",
+      "pv": {
+        "nodeType": "channel",
+        "shape": "rectangle",
+        "icon": "Link",
+        "references": ["packages/agents/src/mcp/index.ts", "packages/agents/src/observability/mcp.ts"]
+      }
+    },
+    {
+      "id": "email-channel",
+      "type": "text",
+      "x": 500,
+      "y": 350,
+      "width": 180,
+      "height": 80,
+      "text": "agents:email\n(Email routing)",
+      "color": "#6366f1",
+      "pv": {
+        "nodeType": "channel",
+        "shape": "rectangle",
+        "icon": "Mail",
+        "references": ["packages/agents/src/email.ts"]
+      }
+    },
+    {
+      "id": "workspace-channel",
+      "type": "text",
+      "x": 700,
+      "y": 350,
+      "width": 180,
+      "height": 80,
+      "text": "agents:workspace\n(Virtual filesystem)",
+      "color": "#84cc16",
+      "pv": {
+        "nodeType": "channel",
+        "shape": "rectangle",
+        "icon": "Folder",
+        "references": ["packages/agents/src/experimental/workspace.ts", "packages/agents/src/observability/workspace.ts"]
+      }
+    },
+    {
+      "id": "observability",
+      "type": "text",
+      "x": 400,
+      "y": 500,
+      "width": 220,
+      "height": 80,
+      "text": "Observability\n(diagnostics_channel)",
+      "color": "#64748b",
+      "pv": {
+        "nodeType": "infrastructure",
+        "shape": "hexagon",
+        "icon": "Eye",
+        "references": ["packages/agents/src/observability/index.ts"]
+      }
+    },
+    {
+      "id": "mcp-client",
+      "type": "text",
+      "x": 0,
+      "y": 500,
+      "width": 180,
+      "height": 80,
+      "text": "MCPClientManager\n(External MCP servers)",
+      "color": "#14b8a6",
+      "pv": {
+        "nodeType": "service",
+        "shape": "rectangle",
+        "icon": "ExternalLink",
+        "references": ["packages/agents/src/mcp/client.ts", "packages/agents/src/mcp/client-connection.ts"]
+      }
+    },
+    {
+      "id": "mcp-server",
+      "type": "text",
+      "x": 800,
+      "y": 500,
+      "width": 180,
+      "height": 80,
+      "text": "McpAgent\n(Expose tools as MCP)",
+      "color": "#14b8a6",
+      "pv": {
+        "nodeType": "service",
+        "shape": "rectangle",
+        "icon": "Share",
+        "references": ["packages/agents/src/mcp/index.ts", "packages/agents/src/mcp/handler.ts"]
+      }
+    },
+    {
+      "id": "client-react",
+      "type": "text",
+      "x": 150,
+      "y": -150,
+      "width": 180,
+      "height": 80,
+      "text": "useAgent\n(React hook)",
+      "color": "#06b6d4",
+      "pv": {
+        "nodeType": "client",
+        "shape": "rectangle",
+        "icon": "Monitor",
+        "references": ["packages/agents/src/react.ts"]
+      }
+    },
+    {
+      "id": "client-vanilla",
+      "type": "text",
+      "x": 650,
+      "y": -150,
+      "width": 180,
+      "height": 80,
+      "text": "AgentClient\n(Vanilla JS)",
+      "color": "#f59e0b",
+      "pv": {
+        "nodeType": "client",
+        "shape": "rectangle",
+        "icon": "FileCode",
+        "references": ["packages/agents/src/client.ts"]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "agent-to-state",
+      "fromNode": "agent-class",
+      "toNode": "state-channel",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "emit" }
+    },
+    {
+      "id": "agent-to-rpc",
+      "fromNode": "agent-class",
+      "toNode": "rpc-channel",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "emit" }
+    },
+    {
+      "id": "agent-to-message",
+      "fromNode": "agent-class",
+      "toNode": "message-channel",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "emit" }
+    },
+    {
+      "id": "agent-to-schedule",
+      "fromNode": "agent-class",
+      "toNode": "schedule-channel",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "emit" }
+    },
+    {
+      "id": "agent-to-lifecycle",
+      "fromNode": "agent-class",
+      "toNode": "lifecycle-channel",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "emit" }
+    },
+    {
+      "id": "state-to-obs",
+      "fromNode": "state-channel",
+      "toNode": "observability",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "collect" }
+    },
+    {
+      "id": "rpc-to-obs",
+      "fromNode": "rpc-channel",
+      "toNode": "observability",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "collect" }
+    },
+    {
+      "id": "message-to-obs",
+      "fromNode": "message-channel",
+      "toNode": "observability",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "collect" }
+    },
+    {
+      "id": "schedule-to-obs",
+      "fromNode": "schedule-channel",
+      "toNode": "observability",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "collect" }
+    },
+    {
+      "id": "lifecycle-to-obs",
+      "fromNode": "lifecycle-channel",
+      "toNode": "observability",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "collect" }
+    },
+    {
+      "id": "workflow-to-obs",
+      "fromNode": "workflow-channel",
+      "toNode": "observability",
+      "fromSide": "bottom",
+      "toSide": "left",
+      "pv": { "edgeType": "collect" }
+    },
+    {
+      "id": "mcp-to-obs",
+      "fromNode": "mcp-channel",
+      "toNode": "observability",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "collect" }
+    },
+    {
+      "id": "email-to-obs",
+      "fromNode": "email-channel",
+      "toNode": "observability",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "collect" }
+    },
+    {
+      "id": "workspace-to-obs",
+      "fromNode": "workspace-channel",
+      "toNode": "observability",
+      "fromSide": "bottom",
+      "toSide": "right",
+      "pv": { "edgeType": "collect" }
+    },
+    {
+      "id": "react-to-agent",
+      "fromNode": "client-react",
+      "toNode": "agent-class",
+      "fromSide": "bottom",
+      "toSide": "left",
+      "pv": { "edgeType": "websocket" }
+    },
+    {
+      "id": "vanilla-to-agent",
+      "fromNode": "client-vanilla",
+      "toNode": "agent-class",
+      "fromSide": "bottom",
+      "toSide": "right",
+      "pv": { "edgeType": "websocket" }
+    },
+    {
+      "id": "mcp-client-to-channel",
+      "fromNode": "mcp-client",
+      "toNode": "mcp-channel",
+      "fromSide": "top",
+      "toSide": "left",
+      "pv": { "edgeType": "emit" }
+    },
+    {
+      "id": "mcp-server-to-channel",
+      "fromNode": "mcp-server",
+      "toNode": "mcp-channel",
+      "fromSide": "top",
+      "toSide": "right",
+      "pv": { "edgeType": "emit" }
+    }
+  ],
+  "pv": {
+    "name": "Agents Core Observability",
+    "version": "1.0.0",
+    "description": "Observability channels in the agents core package using Node.js diagnostics_channel",
+    "markdown": ".principal-views/agents/agents.md",
+    "nodeTypes": {
+      "service": {
+        "shape": "rectangle",
+        "description": "Internal service component"
+      },
+      "channel": {
+        "shape": "rectangle",
+        "description": "Diagnostics channel for observability"
+      },
+      "infrastructure": {
+        "shape": "hexagon",
+        "description": "Infrastructure component"
+      },
+      "client": {
+        "shape": "rectangle",
+        "description": "Client-side component"
+      }
+    },
+    "edgeTypes": {
+      "emit": {
+        "style": "solid",
+        "color": "#3b82f6",
+        "width": 2,
+        "animation": {
+          "type": "flow",
+          "duration": 1000
+        }
+      },
+      "collect": {
+        "style": "dashed",
+        "color": "#64748b",
+        "width": 1
+      },
+      "websocket": {
+        "style": "solid",
+        "color": "#06b6d4",
+        "width": 2,
+        "animation": {
+          "type": "pulse",
+          "duration": 2000
+        }
+      }
+    }
+  }
+}

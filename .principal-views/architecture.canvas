@@ -1,0 +1,243 @@
+{
+  "nodes": [
+    {
+      "id": "agents-core",
+      "type": "text",
+      "x": 400,
+      "y": 100,
+      "width": 200,
+      "height": 100,
+      "text": "agents\n(Core SDK)",
+      "color": "#3b82f6",
+      "pv": {
+        "nodeType": "service",
+        "shape": "rectangle",
+        "icon": "Server",
+        "references": ["packages/agents/src/index.ts"]
+      }
+    },
+    {
+      "id": "ai-chat",
+      "type": "text",
+      "x": 100,
+      "y": 300,
+      "width": 200,
+      "height": 100,
+      "text": "@cloudflare/ai-chat\n(AI Chat Layer)",
+      "color": "#8b5cf6",
+      "pv": {
+        "nodeType": "service",
+        "shape": "rectangle",
+        "icon": "MessageSquare",
+        "references": ["packages/ai-chat/src/index.ts"]
+      }
+    },
+    {
+      "id": "hono-agents",
+      "type": "text",
+      "x": 400,
+      "y": 300,
+      "width": 200,
+      "height": 100,
+      "text": "hono-agents\n(Hono Middleware)",
+      "color": "#f59e0b",
+      "pv": {
+        "nodeType": "service",
+        "shape": "rectangle",
+        "icon": "Layers",
+        "references": ["packages/hono-agents/src/index.ts"]
+      }
+    },
+    {
+      "id": "codemode",
+      "type": "text",
+      "x": 700,
+      "y": 300,
+      "width": 200,
+      "height": 100,
+      "text": "@cloudflare/codemode\n(Code Generation)",
+      "color": "#10b981",
+      "pv": {
+        "nodeType": "service",
+        "shape": "rectangle",
+        "icon": "FileCode",
+        "references": ["packages/codemode/src/index.ts"]
+      }
+    },
+    {
+      "id": "cloudflare-do",
+      "type": "text",
+      "x": 400,
+      "y": -100,
+      "width": 200,
+      "height": 80,
+      "text": "Durable Objects\n(Cloudflare)",
+      "color": "#f97316",
+      "pv": {
+        "nodeType": "infrastructure",
+        "shape": "hexagon",
+        "icon": "Cloud",
+        "origin": "external",
+        "references": ["cloudflare:durable-objects"]
+      }
+    },
+    {
+      "id": "ai-sdk",
+      "type": "text",
+      "x": 100,
+      "y": 500,
+      "width": 200,
+      "height": 80,
+      "text": "AI SDK\n(Vercel)",
+      "color": "#64748b",
+      "pv": {
+        "nodeType": "external",
+        "shape": "diamond",
+        "icon": "Cpu",
+        "origin": "external",
+        "references": ["ai"]
+      }
+    },
+    {
+      "id": "mcp-sdk",
+      "type": "text",
+      "x": 700,
+      "y": 500,
+      "width": 200,
+      "height": 80,
+      "text": "MCP SDK\n(Model Context Protocol)",
+      "color": "#64748b",
+      "pv": {
+        "nodeType": "external",
+        "shape": "diamond",
+        "icon": "Link",
+        "origin": "external",
+        "references": ["@modelcontextprotocol/sdk"]
+      }
+    },
+    {
+      "id": "react-client",
+      "type": "text",
+      "x": -150,
+      "y": 100,
+      "width": 180,
+      "height": 80,
+      "text": "React Client\n(useAgent, useAgentChat)",
+      "color": "#06b6d4",
+      "pv": {
+        "nodeType": "client",
+        "shape": "rectangle",
+        "icon": "Monitor",
+        "references": ["packages/agents/src/react.ts"]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "agents-to-do",
+      "fromNode": "agents-core",
+      "toNode": "cloudflare-do",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "pv": { "edgeType": "infra" }
+    },
+    {
+      "id": "ai-chat-to-agents",
+      "fromNode": "ai-chat",
+      "toNode": "agents-core",
+      "fromSide": "top",
+      "toSide": "left",
+      "pv": { "edgeType": "dependency" }
+    },
+    {
+      "id": "hono-to-agents",
+      "fromNode": "hono-agents",
+      "toNode": "agents-core",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "pv": { "edgeType": "dependency" }
+    },
+    {
+      "id": "codemode-to-agents",
+      "fromNode": "codemode",
+      "toNode": "agents-core",
+      "fromSide": "top",
+      "toSide": "right",
+      "pv": { "edgeType": "dependency" }
+    },
+    {
+      "id": "ai-chat-to-sdk",
+      "fromNode": "ai-chat",
+      "toNode": "ai-sdk",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "external" }
+    },
+    {
+      "id": "agents-to-mcp",
+      "fromNode": "agents-core",
+      "toNode": "mcp-sdk",
+      "fromSide": "right",
+      "toSide": "top",
+      "pv": { "edgeType": "external" }
+    },
+    {
+      "id": "react-to-agents",
+      "fromNode": "react-client",
+      "toNode": "agents-core",
+      "fromSide": "right",
+      "toSide": "left",
+      "pv": { "edgeType": "websocket" }
+    }
+  ],
+  "pv": {
+    "name": "Cloudflare Agents Architecture",
+    "version": "1.0.0",
+    "description": "High-level architecture of the Cloudflare Agents SDK monorepo",
+    "markdown": ".principal-views/architecture.md",
+    "nodeTypes": {
+      "service": {
+        "shape": "rectangle",
+        "description": "Internal SDK package"
+      },
+      "infrastructure": {
+        "shape": "hexagon",
+        "description": "Platform infrastructure"
+      },
+      "external": {
+        "shape": "diamond",
+        "description": "External dependency"
+      },
+      "client": {
+        "shape": "rectangle",
+        "description": "Client-side code"
+      }
+    },
+    "edgeTypes": {
+      "dependency": {
+        "style": "solid",
+        "color": "#64748b",
+        "width": 2
+      },
+      "infra": {
+        "style": "dashed",
+        "color": "#f97316",
+        "width": 2
+      },
+      "external": {
+        "style": "dotted",
+        "color": "#94a3b8",
+        "width": 1
+      },
+      "websocket": {
+        "style": "solid",
+        "color": "#06b6d4",
+        "width": 2,
+        "animation": {
+          "type": "flow",
+          "duration": 1500
+        }
+      }
+    }
+  }
+}

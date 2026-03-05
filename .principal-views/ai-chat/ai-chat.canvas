@@ -1,0 +1,314 @@
+{
+  "nodes": [
+    {
+      "id": "ai-chat-agent",
+      "type": "text",
+      "x": 400,
+      "y": 0,
+      "width": 220,
+      "height": 100,
+      "text": "AIChatAgent\n(extends Agent)",
+      "color": "#8b5cf6",
+      "pv": {
+        "nodeType": "service",
+        "shape": "rectangle",
+        "icon": "MessageSquare",
+        "references": ["packages/ai-chat/src/index.ts"]
+      }
+    },
+    {
+      "id": "agent-base",
+      "type": "text",
+      "x": 400,
+      "y": -150,
+      "width": 180,
+      "height": 80,
+      "text": "Agent\n(agents core)",
+      "color": "#3b82f6",
+      "pv": {
+        "nodeType": "external",
+        "shape": "hexagon",
+        "icon": "Server",
+        "origin": "external",
+        "references": ["agents"]
+      }
+    },
+    {
+      "id": "message-persistence",
+      "type": "text",
+      "x": 100,
+      "y": 180,
+      "width": 200,
+      "height": 80,
+      "text": "Message Persistence\n(SQLite storage)",
+      "color": "#22c55e",
+      "pv": {
+        "nodeType": "database",
+        "shape": "rectangle",
+        "icon": "Database",
+        "references": ["packages/ai-chat/src/index.ts"]
+      }
+    },
+    {
+      "id": "resumable-stream",
+      "type": "text",
+      "x": 400,
+      "y": 180,
+      "width": 200,
+      "height": 80,
+      "text": "ResumableStream\n(Survives disconnect)",
+      "color": "#f59e0b",
+      "pv": {
+        "nodeType": "service",
+        "shape": "rectangle",
+        "icon": "RefreshCw",
+        "references": ["packages/ai-chat/src/resumable-stream.ts"]
+      }
+    },
+    {
+      "id": "message-builder",
+      "type": "text",
+      "x": 700,
+      "y": 180,
+      "width": 200,
+      "height": 80,
+      "text": "MessageBuilder\n(Chunk processing)",
+      "color": "#06b6d4",
+      "pv": {
+        "nodeType": "service",
+        "shape": "rectangle",
+        "icon": "Layers",
+        "references": ["packages/ai-chat/src/message-builder.ts"]
+      }
+    },
+    {
+      "id": "client-tools",
+      "type": "text",
+      "x": 100,
+      "y": 350,
+      "width": 200,
+      "height": 80,
+      "text": "Client Tools\n(Dynamic registration)",
+      "color": "#ec4899",
+      "pv": {
+        "nodeType": "service",
+        "shape": "rectangle",
+        "icon": "Wrench",
+        "references": ["packages/ai-chat/src/index.ts"]
+      }
+    },
+    {
+      "id": "ws-transport",
+      "type": "text",
+      "x": 400,
+      "y": 350,
+      "width": 200,
+      "height": 80,
+      "text": "WS Chat Transport\n(WebSocket streaming)",
+      "color": "#14b8a6",
+      "pv": {
+        "nodeType": "service",
+        "shape": "rectangle",
+        "icon": "Zap",
+        "references": ["packages/ai-chat/src/ws-chat-transport.ts"]
+      }
+    },
+    {
+      "id": "v5-migration",
+      "type": "text",
+      "x": 700,
+      "y": 350,
+      "width": 200,
+      "height": 80,
+      "text": "V5 Migration\n(Auto-transform)",
+      "color": "#64748b",
+      "pv": {
+        "nodeType": "service",
+        "shape": "rectangle",
+        "icon": "ArrowRight",
+        "references": ["packages/ai-chat/src/ai-chat-v5-migration.ts"]
+      }
+    },
+    {
+      "id": "ai-sdk",
+      "type": "text",
+      "x": 100,
+      "y": 500,
+      "width": 180,
+      "height": 80,
+      "text": "AI SDK\n(Vercel)",
+      "color": "#64748b",
+      "pv": {
+        "nodeType": "external",
+        "shape": "diamond",
+        "icon": "Cpu",
+        "origin": "external",
+        "references": ["ai"]
+      }
+    },
+    {
+      "id": "react-hook",
+      "type": "text",
+      "x": 400,
+      "y": 500,
+      "width": 200,
+      "height": 80,
+      "text": "useAgentChat\n(React hook)",
+      "color": "#06b6d4",
+      "pv": {
+        "nodeType": "client",
+        "shape": "rectangle",
+        "icon": "Monitor",
+        "references": ["packages/ai-chat/src/react.ts"]
+      }
+    },
+    {
+      "id": "forever-exp",
+      "type": "text",
+      "x": 700,
+      "y": 500,
+      "width": 200,
+      "height": 80,
+      "text": "Forever (experimental)\n(Persistent conversations)",
+      "color": "#a855f7",
+      "pv": {
+        "nodeType": "service",
+        "shape": "rectangle",
+        "icon": "Infinity",
+        "references": ["packages/ai-chat/src/experimental/forever.ts"]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "chat-extends-agent",
+      "fromNode": "ai-chat-agent",
+      "toNode": "agent-base",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "pv": { "edgeType": "inheritance" }
+    },
+    {
+      "id": "chat-to-persistence",
+      "fromNode": "ai-chat-agent",
+      "toNode": "message-persistence",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "data" }
+    },
+    {
+      "id": "chat-to-stream",
+      "fromNode": "ai-chat-agent",
+      "toNode": "resumable-stream",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "data" }
+    },
+    {
+      "id": "chat-to-builder",
+      "fromNode": "ai-chat-agent",
+      "toNode": "message-builder",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "data" }
+    },
+    {
+      "id": "persistence-to-tools",
+      "fromNode": "message-persistence",
+      "toNode": "client-tools",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "data" }
+    },
+    {
+      "id": "stream-to-transport",
+      "fromNode": "resumable-stream",
+      "toNode": "ws-transport",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "data" }
+    },
+    {
+      "id": "builder-to-migration",
+      "fromNode": "message-builder",
+      "toNode": "v5-migration",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "data" }
+    },
+    {
+      "id": "tools-to-sdk",
+      "fromNode": "client-tools",
+      "toNode": "ai-sdk",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "external" }
+    },
+    {
+      "id": "transport-to-hook",
+      "fromNode": "ws-transport",
+      "toNode": "react-hook",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "websocket" }
+    },
+    {
+      "id": "migration-to-forever",
+      "fromNode": "v5-migration",
+      "toNode": "forever-exp",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "data" }
+    }
+  ],
+  "pv": {
+    "name": "AI Chat Package",
+    "version": "1.0.0",
+    "description": "Architecture of @cloudflare/ai-chat package - AI-powered chat agents with message persistence and resumable streaming",
+    "markdown": ".principal-views/ai-chat/ai-chat.md",
+    "nodeTypes": {
+      "service": {
+        "shape": "rectangle",
+        "description": "Internal service component"
+      },
+      "database": {
+        "shape": "rectangle",
+        "description": "Data storage component"
+      },
+      "external": {
+        "shape": "diamond",
+        "description": "External dependency"
+      },
+      "client": {
+        "shape": "rectangle",
+        "description": "Client-side component"
+      }
+    },
+    "edgeTypes": {
+      "inheritance": {
+        "style": "solid",
+        "color": "#3b82f6",
+        "width": 3
+      },
+      "data": {
+        "style": "solid",
+        "color": "#64748b",
+        "width": 2
+      },
+      "external": {
+        "style": "dotted",
+        "color": "#94a3b8",
+        "width": 1
+      },
+      "websocket": {
+        "style": "solid",
+        "color": "#06b6d4",
+        "width": 2,
+        "animation": {
+          "type": "flow",
+          "duration": 1500
+        }
+      }
+    }
+  }
+}

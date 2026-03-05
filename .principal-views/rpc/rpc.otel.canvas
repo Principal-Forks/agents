@@ -1,0 +1,286 @@
+{
+  "nodes": [
+    {
+      "id": "rpc-started",
+      "type": "text",
+      "x": 100,
+      "y": 50,
+      "width": 200,
+      "height": 100,
+      "text": "Request Received\nRPC call initiated",
+      "color": "#3b82f6",
+      "pv": {
+        "nodeType": "event",
+        "shape": "rectangle",
+        "icon": "Play",
+        "status": "draft",
+        "references": ["packages/agents/src/index.ts"],
+        "otel": {
+          "kind": "event",
+          "category": "rpc",
+          "isNew": true
+        },
+        "event": {
+          "name": "rpc:started",
+          "description": "Emitted when an RPC request is received and parsed",
+          "attributes": {
+            "method": {
+              "type": "string",
+              "description": "Name of the method being called",
+              "required": true
+            },
+            "requestId": {
+              "type": "string",
+              "description": "Unique identifier for this RPC request",
+              "required": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "rpc-validated",
+      "type": "text",
+      "x": 100,
+      "y": 250,
+      "width": 200,
+      "height": 100,
+      "text": "Method Validated\nMethod exists and is callable",
+      "color": "#8b5cf6",
+      "pv": {
+        "nodeType": "event",
+        "shape": "rectangle",
+        "icon": "ShieldCheck",
+        "status": "draft",
+        "references": ["packages/agents/src/index.ts"],
+        "otel": {
+          "kind": "event",
+          "category": "rpc",
+          "isNew": true
+        },
+        "event": {
+          "name": "rpc:validated",
+          "description": "Emitted when method validation passes (exists and has @callable decorator)",
+          "attributes": {
+            "method": {
+              "type": "string",
+              "description": "Name of the validated method",
+              "required": true
+            },
+            "streaming": {
+              "type": "boolean",
+              "description": "Whether this is a streaming method",
+              "required": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "rpc-executing",
+      "type": "text",
+      "x": 100,
+      "y": 450,
+      "width": 200,
+      "height": 100,
+      "text": "Method Executing\nInvocation in progress",
+      "color": "#f59e0b",
+      "pv": {
+        "nodeType": "event",
+        "shape": "rectangle",
+        "icon": "Loader",
+        "status": "draft",
+        "references": ["packages/agents/src/index.ts"],
+        "otel": {
+          "kind": "event",
+          "category": "rpc",
+          "isNew": true
+        },
+        "event": {
+          "name": "rpc:executing",
+          "description": "Emitted when method invocation begins",
+          "attributes": {
+            "method": {
+              "type": "string",
+              "description": "Name of the method being executed",
+              "required": true
+            },
+            "argsCount": {
+              "type": "integer",
+              "description": "Number of arguments passed to the method",
+              "required": false,
+              "display": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "rpc-completed",
+      "type": "text",
+      "x": 100,
+      "y": 650,
+      "width": 200,
+      "height": 100,
+      "text": "Method Completed\nExecution successful",
+      "color": "#22c55e",
+      "pv": {
+        "nodeType": "event",
+        "shape": "rectangle",
+        "icon": "Check",
+        "status": "implemented",
+        "references": ["packages/agents/src/index.ts"],
+        "otel": {
+          "kind": "event",
+          "category": "rpc",
+          "files": ["packages/agents/src/index.ts"]
+        },
+        "event": {
+          "name": "rpc",
+          "description": "Emitted when an RPC method call completes successfully",
+          "attributes": {
+            "method": {
+              "type": "string",
+              "description": "Name of the method that was called",
+              "required": true
+            },
+            "streaming": {
+              "type": "boolean",
+              "description": "Whether this was a streaming method call",
+              "required": false
+            },
+            "durationMs": {
+              "type": "number",
+              "description": "Execution time in milliseconds",
+              "required": false,
+              "display": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "rpc-error",
+      "type": "text",
+      "x": 400,
+      "y": 350,
+      "width": 200,
+      "height": 100,
+      "text": "Method Failed\nError encountered",
+      "color": "#ef4444",
+      "pv": {
+        "nodeType": "event",
+        "shape": "rectangle",
+        "icon": "X",
+        "status": "implemented",
+        "references": ["packages/agents/src/index.ts"],
+        "otel": {
+          "kind": "event",
+          "category": "rpc",
+          "files": ["packages/agents/src/index.ts"]
+        },
+        "event": {
+          "name": "rpc:error",
+          "description": "Emitted when an RPC method call fails",
+          "attributes": {
+            "method": {
+              "type": "string",
+              "description": "Name of the method that was called",
+              "required": true
+            },
+            "error": {
+              "type": "string",
+              "description": "Error message describing the failure",
+              "required": true
+            },
+            "errorType": {
+              "type": "string",
+              "description": "Type of error: method_not_found, not_callable, execution_error",
+              "required": false
+            },
+            "stage": {
+              "type": "string",
+              "description": "Stage where error occurred: validation, execution",
+              "required": false,
+              "display": false
+            }
+          }
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "started-to-validated",
+      "fromNode": "rpc-started",
+      "toNode": "rpc-validated",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "flow" }
+    },
+    {
+      "id": "started-to-error-validation",
+      "fromNode": "rpc-started",
+      "toNode": "rpc-error",
+      "fromSide": "right",
+      "toSide": "top",
+      "pv": { "edgeType": "error" }
+    },
+    {
+      "id": "validated-to-executing",
+      "fromNode": "rpc-validated",
+      "toNode": "rpc-executing",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "flow" }
+    },
+    {
+      "id": "validated-to-error",
+      "fromNode": "rpc-validated",
+      "toNode": "rpc-error",
+      "fromSide": "right",
+      "toSide": "left",
+      "pv": { "edgeType": "error" }
+    },
+    {
+      "id": "executing-to-completed",
+      "fromNode": "rpc-executing",
+      "toNode": "rpc-completed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "pv": { "edgeType": "flow" }
+    },
+    {
+      "id": "executing-to-error",
+      "fromNode": "rpc-executing",
+      "toNode": "rpc-error",
+      "fromSide": "right",
+      "toSide": "bottom",
+      "pv": { "edgeType": "error" }
+    }
+  ],
+  "pv": {
+    "name": "RPC Request Handling",
+    "version": "1.0.0",
+    "description": "Type-safe RPC method calls via @callable() decorator over WebSocket",
+    "markdown": ".principal-views/rpc/rpc.md",
+    "nodeTypes": {
+      "event": {
+        "shape": "rectangle",
+        "description": "Observability event emitted during RPC handling"
+      }
+    },
+    "edgeTypes": {
+      "flow": {
+        "style": "solid",
+        "color": "#22c55e",
+        "width": 2
+      },
+      "error": {
+        "style": "dashed",
+        "color": "#ef4444",
+        "width": 2
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "version": "1.0.0",
+  "canvas": ".principal-views/rpc/rpc.otel.canvas",
+  "name": "RPC Method Call",
+  "description": "Type-safe remote procedure call from client to agent via WebSocket",
+  "spanPattern": "agents.rpc",
+  "mode": "span-tree",
+  "status": "draft",
+  "scenarios": [
+    {
+      "id": "success",
+      "priority": 1,
+      "description": "RPC method executed successfully",
+      "template": {
+        "events": {
+          "rpc:started": "Received RPC request for **{{method}}** (id: {{requestId}})",
+          "rpc:validated": "Method **{{method}}** validated | streaming: {{streaming}}",
+          "rpc:executing": "Executing **{{method}}**",
+          "rpc": "Completed **{{method}}** | streaming: {{streaming}}"
+        },
+        "summary": "RPC call to {{method}} completed successfully"
+      }
+    },
+    {
+      "id": "error",
+      "priority": 2,
+      "description": "RPC method call failed at any stage",
+      "template": {
+        "events": {
+          "rpc:started": "Received RPC request for **{{method}}** (id: {{requestId}})",
+          "rpc:validated": "Method **{{method}}** validated | streaming: {{streaming}}",
+          "rpc:executing": "Executing **{{method}}**",
+          "rpc:error": "**{{method}}** failed ({{errorType}}): {{error}}"
+        },
+        "summary": "RPC call to {{method}} failed: {{error}}"
+      }
+    }
+  ]
+}
